@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    let socket = new WebSocket("ws://localhost:8000/ws")
+    console.log("Attempting Websocket conn...");
+    socket.onopen = () => {
+      console.log("Connected :D");
+      socket.send("Hello");
+    };
+
+    socket.onclose = (event) => {
+      console.log("Socket closed", event);
+    };
+
+    socket.onmessage = (msg) => {
+      console.log(msg);
+    }
+
+    socket.onerror = (err) => {
+      console.log("Socket error", error);
+    };
+  </script>
+</body>
+</html>
