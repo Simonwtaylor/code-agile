@@ -43,7 +43,7 @@ func wsEndpoint(w http.ResponseWriter, r *http.Request) {
 		log.Println(err)
 	}
 
-	log.Println("Client Connected :D")
+	log.Println("Client Connected 🔌")
 
 	reader(ws)
 }
@@ -54,7 +54,7 @@ func setupRoutes() {
 }
 
 func main() {
-	fmt.Println("Hello World...")
+	fmt.Println("Hello World 🔥")
 	setupRoutes()
 	log.Fatal(http.ListenAndServe(":8000", nil))
 }
