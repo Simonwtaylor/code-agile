@@ -12,7 +12,7 @@
     console.log("Attempting Websocket conn...");
     socket.onopen = () => {
       console.log("Connected :D");
-      socket.send("Hello");
+      socket.send(JSON.stringify({ example: 'asdasd' }));
     };
 
     socket.onclose = (event) => {

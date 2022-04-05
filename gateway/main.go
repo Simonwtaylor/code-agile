@@ -1,12 +1,17 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
 
 	"github.com/gorilla/websocket"
 )
+
+type MessageType struct {
+	Example string
+}
 
 var upgrader = websocket.Upgrader{
 	ReadBufferSize:  1024,
@@ -19,13 +24,17 @@ func homePage(w http.ResponseWriter, r *http.Request) {
 
 func reader(conn *websocket.Conn) {
 	for {
+		var message MessageType
 		messageType, p, err := conn.ReadMessage()
 		if err != nil {
 			log.Println(err)
 			return
 		}
 
-		log.Println(string(p))
+		log.Println(messageType)
+		json.Unmarshal(p, &message)
+
+		log.Println(message.Example)
 
 		if err := conn.WriteMessage(messageType, p); err != nil {
 			log.Println(err)
