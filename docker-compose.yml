@@ -1,0 +1,22 @@
+version: '3'
+services:
+  codeagiledb:
+    image: postgres
+    container_name: codeagiledb
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: p@ssw0rd
+      POSTGRES_DB: codeagile
+    volumes:
+      - 'codeagile:/var/lib/codeagile/'
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - pg_isready -U postgres
+      interval: 10s
+      timeout: 5s
+      retries: 5
+volumes:
+  codeagile: null
