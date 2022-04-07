@@ -6,6 +6,8 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/Simonwtaylor/code-agile/models"
+	"github.com/gorilla/mux"
 	"github.com/gorilla/websocket"
 )
 
@@ -57,6 +59,17 @@ func wsEndpoint(w http.ResponseWriter, r *http.Request) {
 	reader(ws)
 }
 
+func getTasks(w http.ResponseWriter, r *http.Request) []models.TaskModel {
+	tasks := []models.TaskModel{
+		models.TaskModel{
+			ID:    "123",
+			Title: "Task 1",
+		},
+	}
+
+	return tasks
+}
+
 func setupRoutes() {
 	http.HandleFunc("/", homePage)
 	http.HandleFunc("/ws", wsEndpoint)
@@ -64,6 +77,12 @@ func setupRoutes() {
 
 func main() {
 	fmt.Println("Hello World 🔥")
-	setupRoutes()
-	log.Fatal(http.ListenAndServe(":8000", nil))
+	r := mux.NewRouter()
+
+	r.HandleFunc("/", homePage)
+	r.HandleFunc("/ws", wsEndpoint)
+	r.HandleFunc("/tasks", getTasks).Methods("GET")
+
+	// setupRoutes()
+	log.Fatal(http.ListenAndServe(":8000", r))
 }
